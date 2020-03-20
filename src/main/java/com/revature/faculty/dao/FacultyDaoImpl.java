@@ -28,7 +28,7 @@ public class FacultyDaoImpl implements FacultyDao {
 	}
 	
 	@Override
-	public List<Faculty> getByInstitution(Long id){
+	public List<Faculty> getByInstitution(Long id) throws DBException{
 		Session currentSession=entityManager.unwrap(Session.class);
 		Query<Faculty> query=currentSession.createQuery("from Faculty Where institution_id=" + id,Faculty.class);
 		List<Faculty> list=query.getResultList();
