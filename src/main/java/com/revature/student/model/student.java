@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 
 
 @Entity
@@ -24,8 +25,9 @@ public class student {
 	 * 
 	 * @Column(name="modified_by") private String modifiedby;
 	 */
+//	@ManyToOne(cascade = {CascadeType.ALL})
 	@ManyToOne
-	@JoinColumn(name="institution_id")
+	@JoinColumn(name="institution_id", referencedColumnName ="id")
 	private Organization org;
 	@Column(name="register_number")
 	private Long redgno;
