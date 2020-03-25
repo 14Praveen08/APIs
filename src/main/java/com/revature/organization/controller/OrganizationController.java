@@ -32,6 +32,13 @@ public class OrganizationController {
 
 	}
 
+	@GetMapping("/organization/active")
+	public List<Organization> getActive() throws ServiceException {
+
+		return organizationService.getActive();
+
+	}
+
 	@PostMapping("/organization")
 	public Organization save(@RequestBody Organization organizationObj) throws DBException {
 		organizationService.save(organizationObj);

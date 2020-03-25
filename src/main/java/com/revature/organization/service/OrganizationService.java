@@ -9,6 +9,8 @@ import com.revature.organization.model.Organization;
 public interface OrganizationService {
 	List<Organization> get() throws ServiceException;
 
+	List<Organization> getActive() throws ServiceException;
+
 	Organization get(Long id) throws ServiceException;
 
 	void save(Organization org) throws DBException;

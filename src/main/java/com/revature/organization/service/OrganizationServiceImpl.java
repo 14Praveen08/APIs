@@ -37,6 +37,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Transactional
 	@Override
+	public List<Organization> getActive() throws ServiceException {
+		List<Organization> org = new ArrayList<Organization>();
+		try {
+			org = organizationDAO.getActive();
+			if (org.isEmpty()) {
+				throw new ServiceException(OrganizationMessage.NO_RECORD);
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return org;
+	}
+
+	@Transactional
+	@Override
 	public Organization get(Long id) throws ServiceException {
 		Organization org = new Organization();
 		try {
