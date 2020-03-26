@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,9 +70,13 @@ class FacultyServiceImplTest {
 		faculty.setLast_name("def");
 		faculty.setOrg(org);
 		faculty.setRoles(roles);
-		String str = "2015-03-31";
+		String str = "1985-03-31";
 		Date date = Date.valueOf(str);
 		faculty.setDob(date);
+		LocalDateTime cDateTime = LocalDateTime.of(2020, 03, 22, 11, 42, 32);
+		faculty.setCreatedon(cDateTime);
+		LocalDateTime mDateTime = LocalDateTime.of(2020, 03, 22, 11, 45, 20);
+		faculty.setCreatedon(mDateTime);
 		faculty.setEmail("abc@gmail.com");
 		faculty.setMobile_no((long) 998451233);
 
@@ -89,10 +94,28 @@ class FacultyServiceImplTest {
 		when(faculty.getLast_name()).thenReturn("Kumaar");
 		when(faculty.getEmployee_id()).thenReturn(1);
 		when(faculty.getOrg()).thenReturn(org);
+		when(faculty.getRoles()).thenReturn(roles);
+		String str = "1985-03-31";
+		Date date = Date.valueOf(str);
+		when(faculty.getDob()).thenReturn(date);
+		LocalDateTime cDateTime = LocalDateTime.of(2020, 03, 22, 11, 42, 32);
+		when(faculty.getCreatedon()).thenReturn(cDateTime);
+		LocalDateTime mDateTime = LocalDateTime.of(2020, 03, 22, 11, 45, 20);
+		when(faculty.getModifiedon()).thenReturn(mDateTime);
+		when(faculty.getEmail()).thenReturn("abc@gmail.com");
+		when(faculty.getMobile_no()).thenReturn((long) 994019744);
+
 		assertEquals("ABC", faculty.getFirst_name());
 		assertEquals("Kumaar", faculty.getLast_name());
 		assertEquals(1, faculty.getEmployee_id());
 		assertEquals(org, faculty.getOrg());
+		assertEquals(roles, faculty.getRoles());
+		assertEquals(date, faculty.getDob());
+		assertEquals(cDateTime, faculty.getCreatedon());
+		assertEquals(mDateTime, faculty.getModifiedon());
+		assertEquals("abc@gmail.com", faculty.getEmail());
+		assertEquals(994019744, faculty.getMobile_no());
+
 	}
 
 	@Test
@@ -123,13 +146,16 @@ class FacultyServiceImplTest {
 		faculty.setLast_name("def");
 		faculty.setOrg(org);
 		faculty.setRoles(roles);
-		String str = "2015-03-31";
+		String str = "1985-03-31";
 		Date date = Date.valueOf(str);
 		faculty.setDob(date);
+		LocalDateTime cDateTime = LocalDateTime.of(2020, 03, 22, 11, 42, 32);
+		faculty.setCreatedon(cDateTime);
+		LocalDateTime mDateTime = LocalDateTime.of(2020, 03, 22, 11, 45, 20);
+		faculty.setCreatedon(mDateTime);
 		faculty.setEmail("abc@gmail.com");
 		faculty.setMobile_no((long) 998451233);
 
-		List<Faculty> facultyList = new ArrayList<Faculty>();
 		facultyList.add(faculty);
 
 		return facultyList;
