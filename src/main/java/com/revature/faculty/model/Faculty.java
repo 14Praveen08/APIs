@@ -1,7 +1,6 @@
 package com.revature.faculty.model;
 
 import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -23,7 +22,7 @@ public class Faculty {
 	@Column(name = "`employee_id`")
 	private Integer employee_id;
 	@ManyToOne
-	@JoinColumn(name="institution_id", referencedColumnName ="id")
+	@JoinColumn(name = "institution_id", referencedColumnName = "id")
 	private Organization org;
 	@Column(name = "`first_name`")
 	private String first_name;
@@ -36,8 +35,8 @@ public class Faculty {
 	@Column(name = "`mobile_number`")
 	private Long mobile_no;
 	@OneToOne
-	@JoinColumn(name="role_id", referencedColumnName = "id")
-	private Roles roles;	
+	@JoinColumn(name = "role_id", referencedColumnName = "id")
+	private Roles roles;
 	@Column(name = "`created_on`")
 	private LocalDateTime createdon;
 	@Column(name = "`modified_on`")
@@ -46,7 +45,6 @@ public class Faculty {
 	private String createdby;
 	@Column(name = "`modified_by`")
 	private String modifiedby;
-
 
 	public Long getId() {
 		return id;
@@ -63,6 +61,7 @@ public class Faculty {
 	public void setEmployee_id(Integer employee_id) {
 		this.employee_id = employee_id;
 	}
+
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -94,6 +93,7 @@ public class Faculty {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Long getMobile_no() {
 		return mobile_no;
 	}
@@ -149,9 +149,5 @@ public class Faculty {
 	public void setModifiedby(String modifiedby) {
 		this.modifiedby = modifiedby;
 	}
-
-
-	
-	
 
 }

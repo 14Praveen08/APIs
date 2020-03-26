@@ -2,11 +2,9 @@ package com.revature.faculty.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -14,6 +12,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -34,6 +34,9 @@ public class RolesServiceImplTest {
 
 	@Spy
 	List<Roles> roleList = new ArrayList<Roles>();
+
+	@Captor
+	private ArgumentCaptor<Long> arg;
 
 	private Long id;
 
@@ -67,25 +70,18 @@ public class RolesServiceImplTest {
 	void testSave() {
 		Roles role = mock(Roles.class);
 
-		doThrow(IllegalArgumentException.class).when(role).setName(null);
-
-		doAnswer((i) -> {
-			assertTrue("HOD".equals(i.getArgument(0)));
-			return null;
-		}).when(role).setName("HOD");
-
 		when(role.getName()).thenReturn("HOD");
-		assertThrows(IllegalArgumentException.class, () -> role.setName(null));
 		assertEquals("HOD", role.getName());
 
 	}
 
 	@Test
-	void testDelete() throws ServiceException, DBException {
-		/*
-		 * doNothing().when(rolesDao).delete((long) id); RolesServiceImpl.delete(id);
-		 * verify(rolesDao, times(1)).delete((long) id);
-		 */
+	void testDelete() throws DBException, ServiceException {
+
+		Long id = (long) 9;
+		RolesServiceImpl.delete(id);
+		verify(rolesDao, times(1)).delete(arg.capture());
+		assertEquals(id, arg.getValue());
 
 	}
 

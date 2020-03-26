@@ -21,7 +21,6 @@ import com.revature.faculty.model.Roles;
 import com.revature.faculty.service.FacultyService;
 import com.revature.faculty.service.RolesService;
 
-
 @RestController
 @RequestMapping("/emp")
 @CrossOrigin(origins = "*")
@@ -30,7 +29,6 @@ public class FacultyController {
 	private FacultyService facultyService;
 	@Autowired
 	private RolesService rolesService;
-	
 
 	@GetMapping("/faculty")
 	public List<Faculty> get() throws ServiceException {
@@ -52,13 +50,13 @@ public class FacultyController {
 	}
 
 	@PostMapping("/faculty")
-	public InsertFacultyDto save(@RequestBody InsertFacultyDto fac) throws DBException{
+	public InsertFacultyDto save(@RequestBody InsertFacultyDto fac) throws DBException {
 		facultyService.save(fac);
 		return fac;
 	}
 
 	@PutMapping("/faculty")
-	public InsertFacultyDto update(@RequestBody InsertFacultyDto fac) throws DBException{
+	public InsertFacultyDto update(@RequestBody InsertFacultyDto fac) throws DBException {
 		facultyService.save(fac);
 		return fac;
 	}
@@ -69,36 +67,37 @@ public class FacultyController {
 		return "Faculty Deleted With id:" + id;
 
 	}
-	
-	//*******************************************************ROLES*********************************************************************************************************
-	
+
+	// *******************************************************ROLES*********************************************************************************************************
+
 	@GetMapping("/role")
-	public List<Roles> getRoles() throws ServiceException{
+	public List<Roles> getRoles() throws ServiceException {
 		return rolesService.get();
 	}
+
 	@GetMapping("/role/{id}")
-	public Roles getRolesById(@PathVariable Long id) throws ServiceException{
+	public Roles getRolesById(@PathVariable Long id) throws ServiceException {
 		return rolesService.get(id);
-		
+
 	}
+
 	@PostMapping("/role")
-	public Roles save(@RequestBody Roles role) throws DBException{
+	public Roles save(@RequestBody Roles role) throws DBException {
 		rolesService.save(role);
 		return role;
 	}
+
 	@PutMapping("/role")
-	public Roles update(@RequestBody Roles role) throws DBException
-	{
+	public Roles update(@RequestBody Roles role) throws DBException {
 		rolesService.save(role);
 		return role;
-		
+
 	}
+
 	@DeleteMapping("/role/{id}")
-	public String deleteRole(@PathVariable Long id) throws ServiceException
-	{
+	public String deleteRole(@PathVariable Long id) throws ServiceException {
 		rolesService.delete(id);
-		return "Role Deleted with id:"+id  ;
+		return "Role Deleted with id:" + id;
 	}
-	
 
 }
