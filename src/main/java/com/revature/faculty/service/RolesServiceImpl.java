@@ -30,6 +30,7 @@ public class RolesServiceImpl implements RolesService {
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
+//			Logger.error(e.getMessage());
 
 		}
 		return list;
