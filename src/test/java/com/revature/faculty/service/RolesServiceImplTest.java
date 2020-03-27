@@ -3,7 +3,6 @@ package com.revature.faculty.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -76,12 +75,13 @@ public class RolesServiceImplTest {
 	}
 
 	@Test
-	void testDelete() throws DBException, ServiceException {
+	void testDelete() throws ServiceException, DBException {
 
-		Long id = (long) 9;
-		RolesServiceImpl.delete(id);
-		verify(rolesDao, times(1)).delete(arg.capture());
-		assertEquals(id, arg.getValue());
+		Roles role = new Roles();
+		when(rolesDao.get(id)).thenReturn(role);
+		assertNotNull(role);
+		rolesDao.delete(id);
+		verify(rolesDao).delete(id);
 
 	}
 

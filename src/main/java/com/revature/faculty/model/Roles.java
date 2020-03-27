@@ -8,16 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="faculty_role")
+@Table(name = "faculty_role")
 public class Roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="`name`")
+	@Column(name = "`name`")
 	private String name;
-	
-	
-
 
 	public Long getId() {
 		return id;

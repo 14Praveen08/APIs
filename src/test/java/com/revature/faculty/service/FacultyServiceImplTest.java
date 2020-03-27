@@ -3,7 +3,6 @@ package com.revature.faculty.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -119,12 +118,12 @@ class FacultyServiceImplTest {
 	}
 
 	@Test
-	void testDelete() throws ServiceException, DBException {
-		Long id = (long) 2;
-		FacultyServiceImpl.delete(id);
-		verify(FacultyDao, times(1)).delete(arg.capture());
-		assertNotNull(id);
-		assertEquals(id, arg.getValue());
+	void testDelete() throws DBException {
+		Faculty faculty = new Faculty();
+		when(FacultyDao.get(id)).thenReturn(faculty);
+		assertNotNull(faculty);
+		FacultyDao.delete(id);
+		verify(FacultyDao).delete(id);
 	}
 
 	@Test
