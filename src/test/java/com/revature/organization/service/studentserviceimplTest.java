@@ -2,8 +2,8 @@ package com.revature.organization.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
@@ -88,8 +88,12 @@ class studentserviceimplTest {
 	}
 
 	@Test
-	void testDelete() {
-		fail("Not yet implemented");
+	void testDelete() throws DBException {
+		student student = new student();
+		when(studentdao.get(id)).thenReturn(student);
+		assertNotNull(student);
+		studentdao.delete(id);
+		verify(studentdao).delete(id);
 	}
 
 	@Test

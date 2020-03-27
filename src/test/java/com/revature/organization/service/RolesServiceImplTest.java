@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -85,8 +85,12 @@ class RolesServiceImplTest {
 	}
 
 	@Test
-	void testDelete() {
-		fail("Not yet implemented");
+	void testDelete() throws DBException {
+		Roles role = new Roles();
+		when(rolesDao.get(id)).thenReturn(role);
+		assertNotNull(role);
+		rolesDao.delete(id);
+		verify(rolesDao).delete(id);
 	}
 
 }
