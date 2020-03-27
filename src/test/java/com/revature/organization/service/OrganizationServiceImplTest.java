@@ -2,8 +2,8 @@ package com.revature.organization.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -89,8 +89,12 @@ class OrganizationServiceImplTest {
 	}
 
 	@Test
-	void testDelete() {
-		fail("Not yet implemented");
+	void testDelete() throws DBException {
+		Organization organization = new Organization();
+		when(org.get(id)).thenReturn(organization);
+		assertNotNull(organization);
+		org.delete(id);
+		verify(org).delete(id);
 	}
 
 	@Test
