@@ -19,6 +19,7 @@ import org.mockito.Spy;
 
 import com.revature.organization.dao.OrganizationDAO;
 import com.revature.organization.exception.DBException;
+import com.revature.organization.exception.NotFound;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Organization;
 
@@ -42,7 +43,7 @@ class OrganizationServiceImplTest {
 	}
 
 	@Test
-	void testGet() throws DBException, ServiceException {
+	void testGet() throws DBException, ServiceException, NotFound {
 		when(org.get()).thenReturn(organizationList);
 		assertNotNull(organizationList);
 		assertEquals(orgservice.get(), organizationList);
@@ -50,7 +51,7 @@ class OrganizationServiceImplTest {
 	}
 
 	@Test
-	void testGetLong() throws DBException, ServiceException {
+	void testGetLong() throws DBException, ServiceException, NotFound {
 		Organization organization = new Organization();
 		organization.setName("KCG College of Engineering");
 		organization.setAlias("KCG");
@@ -98,7 +99,7 @@ class OrganizationServiceImplTest {
 	}
 
 	@Test
-	void testChangeStatus() throws DBException, ServiceException {
+	void testChangeStatus() throws DBException, ServiceException, NotFound {
 		Organization organization = new Organization();
 		organization.setIsActive(true);
 

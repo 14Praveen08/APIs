@@ -7,10 +7,13 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.revature.organization.dao.OrganizationDAO;
+import com.revature.organization.exception.BadResponse;
 import com.revature.organization.exception.DBException;
+import com.revature.organization.exception.NotFound;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Organization;
 import com.revature.organization.util.OrganizationMessage;
@@ -22,12 +25,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Transactional
 	@Override
-	public List<Organization> get() throws ServiceException {
+	public List<Organization> get() throws NotFound {
 		List<Organization> org = new ArrayList<Organization>();
 		try {
 			org = organizationDAO.get();
 			if (org.isEmpty()) {
-				throw new ServiceException(OrganizationMessage.NO_RECORD);
+				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Unable to get records!!DB Empty");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -52,12 +55,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Transactional
 	@Override
-	public Organization get(Long id) throws ServiceException {
+	public Organization get(Long id) throws NotFound {
 		Organization org = new Organization();
 		try {
 			org = organizationDAO.get(id);
 			if (org == null) {
-				throw new ServiceException(OrganizationMessage.UNABLE_TO_FIND);
+				throw new NotFound(HttpStatus.OK.value(), "The Record with " + id + " is Displayed Below");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -67,7 +70,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Transactional
 	@Override
-	public void save(Organization org) throws DBException {
+	public void save(Organization org) throws BadResponse {
 		try {
 			LocalDateTime ts = LocalDateTime.now();
 			if (org.getId() == null) {
@@ -80,7 +83,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			String Aname = org.getAlias();
 			String University = org.getUniversity();
 			if (name == null || Aname == null || University == null) {
-				throw new DBException(OrganizationMessage.UNABLE_TO_INSERT);
+				throw new BadResponse(HttpStatus.BAD_REQUEST.value(), " One or More Fields Missing");
 			}
 			organizationDAO.save(org);
 		} catch (DBException e) {
@@ -91,14 +94,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Transactional
 	@Override
-	public void delete(Long id) throws ServiceException {
+	public void delete(Long id) throws NotFound {
 		Organization org = new Organization();
 		try {
 			org = organizationDAO.get(id);
 			if (org != null) {
 				organizationDAO.delete(id);
 			} else {
-				throw new ServiceException(OrganizationMessage.UNABLE_TO_DELETE);
+				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Cannot Find Id");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());

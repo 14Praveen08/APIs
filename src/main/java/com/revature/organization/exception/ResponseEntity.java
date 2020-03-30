@@ -1,4 +1,4 @@
-package com.revature.organization.dto;
+package com.revature.organization.exception;
 
 public class ResponseEntity {
 	private int statusCode;
