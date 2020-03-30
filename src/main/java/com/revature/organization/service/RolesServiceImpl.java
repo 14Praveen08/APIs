@@ -6,9 +6,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.revature.organization.dao.RolesDao;
+import com.revature.organization.exception.BadResponse;
 import com.revature.organization.exception.DBException;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Roles;
@@ -53,11 +55,11 @@ public class RolesServiceImpl implements RolesService {
 
 	@Transactional
 	@Override
-	public void save(Roles role) throws DBException {
+	public void save(Roles role) throws BadResponse, DBException {
 		try {
 			String name = role.getName();
 			if (name == null) {
-				throw new DBException(RolesMessage.UNABLE_TO_INSERT);
+				throw new BadResponse(HttpStatus.BAD_REQUEST.value(), " One or More Fields Missing");
 			}
 			rolesDao.save(role);
 		} catch (DBException e) {

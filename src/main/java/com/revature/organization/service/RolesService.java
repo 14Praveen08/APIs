@@ -2,6 +2,7 @@ package com.revature.organization.service;
 
 import java.util.List;
 
+import com.revature.organization.exception.BadResponse;
 import com.revature.organization.exception.DBException;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Roles;
@@ -11,7 +12,7 @@ public interface RolesService {
 
 	Roles get(Long id) throws ServiceException;
 
-	void save(Roles role) throws DBException;
+	void save(Roles role) throws DBException, BadResponse;
 
 	void delete(Long id) throws ServiceException;
 }
