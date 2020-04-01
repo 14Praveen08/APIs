@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.organization.exception.BadResponse;
-import com.revature.organization.exception.DBException;
 import com.revature.organization.exception.NotFound;
 import com.revature.organization.exception.ResponseEntity;
-import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Organization;
 import com.revature.organization.service.OrganizationService;
 
@@ -30,7 +28,7 @@ public class OrganizationController {
 	private OrganizationService organizationService;
 
 	@GetMapping("/organization")
-	public ResponseEntity get() throws ServiceException {
+	public ResponseEntity get() {
 		try {
 			List<Organization> organization = organizationService.get();
 			return new ResponseEntity(HttpStatus.OK.value(), "The Records in the Table are Displayed Below",
@@ -42,13 +40,19 @@ public class OrganizationController {
 	}
 
 	@GetMapping("/organization/active")
-	public List<Organization> getActive() throws ServiceException {
-		return organizationService.getActive();
+	public ResponseEntity getActive() {
+		try {
+			List<Organization> organization = organizationService.getActive();
+			return new ResponseEntity(HttpStatus.OK.value(), "The Records in the Table are Displayed Below",
+					organization);
+		} catch (NotFound e) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND.value(), "Unable to get records!!DB Empty", null);
+		}
 
 	}
 
 	@PostMapping("/organization")
-	public ResponseEntity save(@RequestBody Organization organizationObj) throws DBException {
+	public ResponseEntity save(@RequestBody Organization organizationObj) {
 		try {
 			organizationService.save(organizationObj);
 			return new ResponseEntity(HttpStatus.CREATED.value(), "Data Insertion Done Successfully", organizationObj);
@@ -59,7 +63,7 @@ public class OrganizationController {
 	}
 
 	@GetMapping("/organization/{id}")
-	public ResponseEntity get(@PathVariable Long id) throws ServiceException, NotFound {
+	public ResponseEntity get(@PathVariable Long id) {
 		try {
 			Organization organizationObj = organizationService.get(id);
 			return new ResponseEntity(HttpStatus.OK.value(), "The Record with " + id + " is Displayed Below",
@@ -70,7 +74,7 @@ public class OrganizationController {
 	}
 
 	@DeleteMapping("/organization/{id}")
-	public ResponseEntity delete(@PathVariable Long id) throws NotFound {
+	public ResponseEntity delete(@PathVariable Long id) {
 		try {
 			organizationService.delete(id);
 			return new ResponseEntity(HttpStatus.OK.value(), "Record " + id + " Deleted Successfully", id);
@@ -80,7 +84,7 @@ public class OrganizationController {
 	}
 
 	@PutMapping("/organization")
-	public ResponseEntity update(@RequestBody Organization organizationObj) throws BadResponse {
+	public ResponseEntity update(@RequestBody Organization organizationObj) {
 		try {
 			organizationService.save(organizationObj);
 			return new ResponseEntity(HttpStatus.OK.value(), "Data Updation Done Successfully", organizationObj);

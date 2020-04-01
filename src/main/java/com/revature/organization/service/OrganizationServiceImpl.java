@@ -14,9 +14,7 @@ import com.revature.organization.dao.OrganizationDAO;
 import com.revature.organization.exception.BadResponse;
 import com.revature.organization.exception.DBException;
 import com.revature.organization.exception.NotFound;
-import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Organization;
-import com.revature.organization.util.OrganizationMessage;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -40,12 +38,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Transactional
 	@Override
-	public List<Organization> getActive() throws ServiceException {
+	public List<Organization> getActive() throws NotFound {
 		List<Organization> org = new ArrayList<Organization>();
 		try {
 			org = organizationDAO.getActive();
 			if (org.isEmpty()) {
-				throw new ServiceException(OrganizationMessage.NO_RECORD);
+				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Unable to get records!!DB Empty");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -60,7 +58,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		try {
 			org = organizationDAO.get(id);
 			if (org == null) {
-				throw new NotFound(HttpStatus.OK.value(), "The Record with " + id + " is Displayed Below");
+				throw new NotFound(HttpStatus.NOT_FOUND.value(), "The Record with " + id + " is Displayed Below");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());

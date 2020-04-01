@@ -20,6 +20,7 @@ import org.mockito.Spy;
 
 import com.revature.organization.dao.studentdao;
 import com.revature.organization.exception.DBException;
+import com.revature.organization.exception.NotFound;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Organization;
 import com.revature.organization.model.student;
@@ -50,7 +51,7 @@ class studentserviceimplTest {
 	}
 
 	@Test
-	void testGet() throws DBException, ServiceException {
+	void testGet() throws DBException, ServiceException, NotFound {
 		when(studentdao.get()).thenReturn(studentList);
 		assertNotNull(studentList);
 		assertEquals(studentservice.get(), studentList);
@@ -97,7 +98,7 @@ class studentserviceimplTest {
 	}
 
 	@Test
-	void testGetstudbyInst() throws DBException, ServiceException {
+	void testGetstudbyInst() throws DBException, ServiceException, NotFound {
 
 		when(studentdao.getstudbyInst(institutionid)).thenReturn(studentList);
 		assertNotNull(studentList);
@@ -106,21 +107,21 @@ class studentserviceimplTest {
 	}
 
 	@Test
-	void testGetstudbyInstYear() throws DBException, ServiceException {
+	void testGetstudbyInstYear() throws DBException, ServiceException, NotFound {
 		when(studentdao.getstudbyInstYear(institutionid, year)).thenReturn(studentList);
 		assertNotNull(studentList);
 		assertEquals(studentservice.getstudbyInstYear(institutionid, year), studentList);
 	}
 
 	@Test
-	void testGetstudbyYear() throws DBException, ServiceException {
+	void testGetstudbyYear() throws DBException, ServiceException, NotFound {
 		when(studentdao.getstudbyYear(year)).thenReturn(studentList);
 		assertNotNull(studentList);
 		assertEquals(studentservice.getstudbyYear(year), studentList);
 	}
 
 	@Test
-	void testGetInt() throws DBException, ServiceException {
+	void testGetInt() throws DBException, ServiceException, NotFound {
 		student stud = new student();
 		stud.setOrg(org);
 		stud.setRedgno((long) 310816);

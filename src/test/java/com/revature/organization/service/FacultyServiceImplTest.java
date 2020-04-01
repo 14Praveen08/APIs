@@ -22,6 +22,7 @@ import org.mockito.Spy;
 
 import com.revature.organization.dao.FacultyDao;
 import com.revature.organization.exception.DBException;
+import com.revature.organization.exception.NotFound;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Faculty;
 import com.revature.organization.model.Organization;
@@ -55,7 +56,7 @@ class FacultyServiceImplTest {
 	}
 
 	@Test
-	void testGet() throws DBException, ServiceException {
+	void testGet() throws DBException, ServiceException, NotFound {
 
 		when(FacultyDao.get()).thenReturn(facultyList);
 		assertNotNull(facultyList);
@@ -64,7 +65,7 @@ class FacultyServiceImplTest {
 	}
 
 	@Test
-	void testGetLong() throws DBException, ServiceException {
+	void testGetLong() throws DBException, ServiceException, NotFound {
 		Faculty faculty = new Faculty();
 		faculty.setFirst_name("abc");
 		faculty.setLast_name("def");
@@ -128,7 +129,7 @@ class FacultyServiceImplTest {
 	}
 
 	@Test
-	void testGetByInstitution() throws DBException, ServiceException {
+	void testGetByInstitution() throws DBException, ServiceException, NotFound {
 
 		when(FacultyDao.getByInstitution(id)).thenReturn(facultyList);
 		assertNotNull(facultyList);
