@@ -1,11 +1,11 @@
 package com.revature.organization.exception;
 
-public class ResponseEntity {
+public class HTTPStatusResponse {
 	private int statusCode;
 	private String description;
 	private Object data;
 
-	public ResponseEntity(int statusCode, String description, Object data) {
+	public HTTPStatusResponse(int statusCode, String description, Object data) {
 		super();
 		this.statusCode = statusCode;
 		this.description = description;
@@ -35,4 +35,5 @@ public class ResponseEntity {
 	public void setData(Object data) {
 		this.data = data;
 	}
+
 }

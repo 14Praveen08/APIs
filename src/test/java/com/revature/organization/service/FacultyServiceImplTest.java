@@ -13,8 +13,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -38,9 +36,6 @@ class FacultyServiceImplTest {
 
 	@Spy
 	List<Faculty> facultyList = new ArrayList<Faculty>();
-
-	@Captor
-	private ArgumentCaptor<Long> arg;
 
 	private Long id;
 

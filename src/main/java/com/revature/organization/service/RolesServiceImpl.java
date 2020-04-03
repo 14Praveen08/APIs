@@ -6,13 +6,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.revature.organization.dao.RolesDao;
-import com.revature.organization.exception.BadResponse;
 import com.revature.organization.exception.DBException;
-import com.revature.organization.exception.NotFound;
+import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Roles;
 
 @Service
@@ -22,12 +20,12 @@ public class RolesServiceImpl implements RolesService {
 
 	@Transactional
 	@Override
-	public List<Roles> get() throws NotFound {
+	public List<Roles> get() throws ServiceException {
 		List<Roles> list = new ArrayList<Roles>();
 		try {
 			list = rolesDao.get();
 			if (list.isEmpty()) {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Unable to get records!!DB Empty");
+				throw new ServiceException("Unable to get records!!DB Empty");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -38,12 +36,12 @@ public class RolesServiceImpl implements RolesService {
 
 	@Transactional
 	@Override
-	public Roles get(Long id) throws NotFound {
+	public Roles get(Long id) throws ServiceException {
 		Roles role = new Roles();
 		try {
 			role = rolesDao.get(id);
 			if (role == null) {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Cannot Find Id");
+				throw new ServiceException("Cannot Find Id");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -54,11 +52,11 @@ public class RolesServiceImpl implements RolesService {
 
 	@Transactional
 	@Override
-	public void save(Roles role) throws BadResponse, DBException {
+	public void save(Roles role) throws ServiceException, DBException {
 		try {
 			String name = role.getName();
 			if (name == null) {
-				throw new BadResponse(HttpStatus.BAD_REQUEST.value(), " One or More Fields Missing");
+				throw new ServiceException(" One or More Fields Missing");
 			}
 			rolesDao.save(role);
 		} catch (DBException e) {
@@ -69,14 +67,14 @@ public class RolesServiceImpl implements RolesService {
 
 	@Transactional
 	@Override
-	public void delete(Long id) throws NotFound {
+	public void delete(Long id) throws ServiceException {
 		Roles role = new Roles();
 		try {
 			role = rolesDao.get(id);
 			if (role != null) {
 				rolesDao.delete(id);
 			} else {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Cannot Find Id");
+				throw new ServiceException("Cannot Find Id");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());

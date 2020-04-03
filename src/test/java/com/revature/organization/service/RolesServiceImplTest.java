@@ -21,7 +21,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.revature.organization.dao.RolesDao;
 import com.revature.organization.exception.DBException;
-import com.revature.organization.exception.NotFound;
 import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Roles;
 
@@ -41,7 +40,7 @@ class RolesServiceImplTest {
 	}
 
 	@Test
-	void testGet() throws DBException, ServiceException, NotFound {
+	void testGet() throws DBException, ServiceException {
 		Roles role = new Roles();
 		role.setId((long) 1);
 		role.setName("HOD");
@@ -59,7 +58,7 @@ class RolesServiceImplTest {
 	}
 
 	@Test
-	void testGetLong() throws DBException, ServiceException, NotFound {
+	void testGetLong() throws ServiceException, DBException {
 		Roles role = new Roles();
 		role.setName("HOD");
 

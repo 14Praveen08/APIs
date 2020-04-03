@@ -7,14 +7,12 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.revature.organization.dao.FacultyDao;
 import com.revature.organization.dto.InsertFacultyDto;
-import com.revature.organization.exception.BadResponse;
 import com.revature.organization.exception.DBException;
-import com.revature.organization.exception.NotFound;
+import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Faculty;
 import com.revature.organization.model.Organization;
 import com.revature.organization.model.Roles;
@@ -26,12 +24,12 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Transactional
 	@Override
-	public List<Faculty> get() throws NotFound {
+	public List<Faculty> get() throws ServiceException {
 		List<Faculty> list = new ArrayList<Faculty>();
 		try {
 			list = facultyDao.get();
 			if (list.isEmpty()) {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Unable to get records!!DB Empty");
+				throw new ServiceException("Unable to get records!!DB Empty");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -41,12 +39,12 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Transactional
 	@Override
-	public Faculty get(Long id) throws NotFound {
+	public Faculty get(Long id) throws ServiceException {
 		Faculty fac = new Faculty();
 		try {
 			fac = facultyDao.get(id);
 			if (fac == null) {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "The Record with " + id + " is Displayed Below");
+				throw new ServiceException("The Record with " + id + " is Displayed Below");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -57,7 +55,7 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Transactional
 	@Override
-	public void save(InsertFacultyDto dto) throws BadResponse {
+	public void save(InsertFacultyDto dto) throws ServiceException {
 		Faculty fac = new Faculty();
 		Organization org = new Organization();
 		Roles role = new Roles();
@@ -90,7 +88,7 @@ public class FacultyServiceImpl implements FacultyService {
 
 			if (fname == null || lname == null || dob == null || email == null || mobilenumber == null) {
 
-				throw new BadResponse(HttpStatus.BAD_REQUEST.value(), " One or More Fields Missing");
+				throw new ServiceException(" One or More Fields Missing");
 			}
 			facultyDao.save(fac);
 
@@ -101,14 +99,14 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Transactional
 	@Override
-	public void delete(Long id) throws NotFound {
+	public void delete(Long id) throws ServiceException {
 		Faculty fac = new Faculty();
 		try {
 			fac = facultyDao.get(id);
 			if (fac != null) {
 				facultyDao.delete(id);
 			} else {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "Cannot Find Id");
+				throw new ServiceException("Cannot Find Id");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
@@ -117,12 +115,12 @@ public class FacultyServiceImpl implements FacultyService {
 	}
 
 	@Override
-	public List<Faculty> getByInstitution(Long id) throws NotFound {
+	public List<Faculty> getByInstitution(Long id) throws ServiceException {
 		List<Faculty> list = new ArrayList<Faculty>();
 		try {
 			list = facultyDao.getByInstitution(id);
 			if (list.isEmpty()) {
-				throw new NotFound(HttpStatus.NOT_FOUND.value(), "The Record with " + id + " is Displayed Below");
+				throw new ServiceException("The Record with " + id + " is Displayed Below");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());

@@ -3,18 +3,17 @@ package com.revature.organization.service;
 import java.util.List;
 
 import com.revature.organization.dto.InsertFacultyDto;
-import com.revature.organization.exception.BadResponse;
-import com.revature.organization.exception.NotFound;
+import com.revature.organization.exception.ServiceException;
 import com.revature.organization.model.Faculty;
 
 public interface FacultyService {
-	List<Faculty> get() throws NotFound;
+	List<Faculty> get() throws ServiceException;
 
-	Faculty get(Long id) throws NotFound;
+	Faculty get(Long id) throws ServiceException;
 
-	void delete(Long id) throws NotFound;
+	void delete(Long id) throws ServiceException;
 
-	List<Faculty> getByInstitution(Long id) throws NotFound;
+	List<Faculty> getByInstitution(Long id) throws ServiceException;
 
-	void save(InsertFacultyDto dto) throws BadResponse;
+	void save(InsertFacultyDto dto) throws ServiceException;
 }
