@@ -1,23 +1,23 @@
 package com.revature.organization.exception;
 
 public class HTTPStatusResponse {
-	private int statusCode;
+	private int status;
 	private String description;
 	private Object data;
 
-	public HTTPStatusResponse(int statusCode, String description, Object data) {
+	public HTTPStatusResponse(int status, String description, Object data) {
 		super();
-		this.statusCode = statusCode;
+		this.status = status;
 		this.description = description;
 		this.data = data;
 	}
 
-	public int getStatusCode() {
-		return statusCode;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public String getDescription() {

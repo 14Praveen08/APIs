@@ -41,10 +41,6 @@ public class Faculty {
 	private LocalDateTime createdon;
 	@Column(name = "`modified_on`")
 	private LocalDateTime modifiedon;
-	@Column(name = "`created_by`")
-	private String createdby;
-	@Column(name = "`modified_by`")
-	private String modifiedby;
 
 	public Long getId() {
 		return id;
@@ -134,28 +130,11 @@ public class Faculty {
 		this.modifiedon = modifiedon;
 	}
 
-	public String getCreatedby() {
-		return createdby;
-	}
-
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
-	}
-
-	public String getModifiedby() {
-		return modifiedby;
-	}
-
-	public void setModifiedby(String modifiedby) {
-		this.modifiedby = modifiedby;
-	}
-
 	@Override
 	public String toString() {
 		return "Faculty [id=" + id + ", employee_id=" + employee_id + ", org=" + org + ", first_name=" + first_name
 				+ ", last_name=" + last_name + ", dob=" + dob + ", email=" + email + ", mobile_no=" + mobile_no
-				+ ", roles=" + roles + ", createdon=" + createdon + ", modifiedon=" + modifiedon + ", createdby="
-				+ createdby + ", modifiedby=" + modifiedby + "]";
+				+ ", roles=" + roles + ", createdon=" + createdon + ", modifiedon=" + modifiedon + "]";
 	}
 
 }

@@ -92,6 +92,10 @@ public class OrganizationController {
 		} catch (ServiceException e) {
 			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(), "Cannot Find Id", id),
 					HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new HTTPStatusResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Cannot Find Id", id),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
