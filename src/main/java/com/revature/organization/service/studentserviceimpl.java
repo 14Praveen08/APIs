@@ -13,6 +13,7 @@ import com.revature.organization.dao.studentdao;
 import com.revature.organization.dto.InsertDTO;
 import com.revature.organization.exception.DBException;
 import com.revature.organization.exception.ServiceException;
+import com.revature.organization.model.Department;
 import com.revature.organization.model.Organization;
 import com.revature.organization.model.student;
 
@@ -41,6 +42,7 @@ public class studentserviceimpl implements studentservice {
 	public void save(InsertDTO idto) throws ServiceException {
 		student stud = new student();
 		Organization org = new Organization();
+		Department dept = new Department();
 		try {
 			if (idto.getId() == null) {
 				stud.setCreatedon(idto.getCreatedon());
@@ -58,6 +60,8 @@ public class studentserviceimpl implements studentservice {
 			stud.setYear(idto.getYear());
 			stud.setMobileno(idto.getMobileno());
 			stud.setEmail(idto.getEmail());
+			dept.setId(idto.getDepartment_id());
+			stud.setDepartment(dept);
 			Long redg = idto.getRedgno();
 			String fname = idto.getFname();
 			String lname = idto.getLname();
@@ -108,6 +112,20 @@ public class studentserviceimpl implements studentservice {
 	}
 
 	@Override
+	public List<student> getstudbyDepartment(Long deptid) throws ServiceException {
+		List<student> stud = new ArrayList<student>();
+		try {
+			stud = studdao.getstudbyDepartment(deptid);
+			if (stud.isEmpty()) {
+				throw new ServiceException("The Record with " + deptid + " is Displayed Below");
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return stud;
+	}
+
+	@Override
 	public List<student> getstudbyInstYear(int institutionid, int year) throws ServiceException {
 		List<student> stud = new ArrayList<student>();
 		try {
@@ -115,6 +133,21 @@ public class studentserviceimpl implements studentservice {
 			if (stud.isEmpty()) {
 				throw new ServiceException("The Record with Institution Id " + institutionid + " and year " + year
 						+ " is Displayed Below");
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return stud;
+	}
+
+	@Override
+	public List<student> getstudbyInstYearDept(int institutionid, int year, Long dept) throws ServiceException {
+		List<student> stud = new ArrayList<student>();
+		try {
+			stud = studdao.getstudbyInstYearDept(institutionid, year, dept);
+			if (stud.isEmpty()) {
+				throw new ServiceException("The Record with Institution Id " + institutionid + " year " + year
+						+ "and department" + dept + " is Displayed Below");
 			}
 		} catch (DBException e) {
 			System.out.println(e.getMessage());

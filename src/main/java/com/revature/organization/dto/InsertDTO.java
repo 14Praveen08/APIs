@@ -15,6 +15,7 @@ public class InsertDTO {
 	private Integer year;
 	private Long mobileno;
 	private String email;
+	private Long department_id;
 	@JsonIgnore
 	private LocalDateTime createdon = LocalDateTime.now();
 	@JsonIgnore
@@ -92,6 +93,14 @@ public class InsertDTO {
 		this.email = email;
 	}
 
+	public Long getDepartment_id() {
+		return department_id;
+	}
+
+	public void setDepartment_id(Long department_id) {
+		this.department_id = department_id;
+	}
+
 	public LocalDateTime getCreatedon() {
 		return createdon;
 	}
@@ -112,7 +121,7 @@ public class InsertDTO {
 	public String toString() {
 		return "InsertDTO [id=" + id + ", institutionid=" + institutionid + ", redgno=" + redgno + ", fname=" + fname
 				+ ", lname=" + lname + ", dob=" + dob + ", year=" + year + ", mobileno=" + mobileno + ", email=" + email
-				+ ", createdon=" + createdon + ", modifiedon=" + modifiedon + "]";
+				+ ", department_id=" + department_id + ", createdon=" + createdon + ", modifiedon=" + modifiedon + "]";
 	}
 
 }

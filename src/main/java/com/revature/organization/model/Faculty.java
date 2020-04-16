@@ -19,7 +19,7 @@ public class Faculty {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "`employee_id`")
+	@Column(name = "`employee_id`", unique = true)
 	private Integer employee_id;
 	@ManyToOne
 	@JoinColumn(name = "institution_id", referencedColumnName = "id")
@@ -30,7 +30,7 @@ public class Faculty {
 	private String last_name;
 	@Column(name = "`dob`")
 	private Date dob;
-	@Column(name = "`email_id`")
+	@Column(name = "`email_id`", unique = true)
 	private String email;
 	@Column(name = "`mobile_number`")
 	private Long mobile_no;

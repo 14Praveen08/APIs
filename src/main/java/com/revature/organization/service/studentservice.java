@@ -15,9 +15,14 @@ public interface studentservice {
 
 	public List<student> getstudbyInstYear(int institutionid, int year) throws ServiceException;
 
+	public List<student> getstudbyInstYearDept(int institutionid, int year, Long dept) throws ServiceException;
+
 	public void save(InsertDTO idto) throws ServiceException;
 
 	public student get(int id) throws ServiceException;
 
 	public List<student> getstudbyYear(int year) throws ServiceException;
+
+	public List<student> getstudbyDepartment(Long deptid) throws ServiceException;
+
 }

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,7 +22,7 @@ public class student {
 	@ManyToOne
 	@JoinColumn(name = "institution_id", referencedColumnName = "id")
 	private Organization org;
-	@Column(name = "register_number")
+	@Column(name = "register_number", unique = true)
 	private Long redgno;
 	@Column(name = "first_name")
 	private String fname;
@@ -31,9 +32,12 @@ public class student {
 	private Date dob;
 	@Column(name = "year")
 	private Integer year;
+	@OneToOne
+	@JoinColumn(name = "department_id", referencedColumnName = "id")
+	private Department department;
 	@Column(name = "Mobile_number")
 	private Long mobileno;
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	@Column(name = "created_on")
 	private LocalDateTime createdon;
@@ -96,6 +100,14 @@ public class student {
 		this.year = year;
 	}
 
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 	public Long getMobileno() {
 		return mobileno;
 	}
@@ -131,8 +143,8 @@ public class student {
 	@Override
 	public String toString() {
 		return "student [id=" + id + ", org=" + org + ", redgno=" + redgno + ", fname=" + fname + ", lname=" + lname
-				+ ", dob=" + dob + ", year=" + year + ", mobileno=" + mobileno + ", email=" + email + ", createdon="
-				+ createdon + ", modifiedon=" + modifiedon + "]";
+				+ ", dob=" + dob + ", year=" + year + ", department=" + department + ", mobileno=" + mobileno
+				+ ", email=" + email + ", createdon=" + createdon + ", modifiedon=" + modifiedon + "]";
 	}
 
 }

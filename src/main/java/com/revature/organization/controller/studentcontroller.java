@@ -68,7 +68,20 @@ public class studentcontroller {
 
 	}
 
-	@GetMapping("getstud/instyearwise/{institutionid}/{year}")
+	@GetMapping("/getstud/department/{deptid}")
+	public ResponseEntity<HTTPStatusResponse> getstudbyDepartment(@PathVariable Long deptid) {
+		try {
+			List<student> student = studservice.getstudbyDepartment(deptid);
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),
+					"Student with " + deptid + " is Displayed Below", student), HttpStatus.OK);
+		} catch (ServiceException e) {
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),
+					"Cannot Find Data with Year " + deptid, deptid), HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@GetMapping("/getstud/instyearwise/{institutionid}/{year}")
 	public ResponseEntity<HTTPStatusResponse> getstudbyInstYear(@PathVariable int institutionid, @PathVariable int year)
 			throws ServiceException {
 		try {
@@ -84,7 +97,23 @@ public class studentcontroller {
 		}
 	}
 
-	@GetMapping("getstud/year/{year}")
+	@GetMapping("/getstud/instyeardeptwise/{institutionid}/{year}/{dept}")
+	public ResponseEntity<HTTPStatusResponse> getstudbyInstYear(@PathVariable int institutionid, @PathVariable int year,
+			@PathVariable Long dept) throws ServiceException {
+		try {
+			List<student> student = studservice.getstudbyInstYearDept(institutionid, year, dept);
+			return new ResponseEntity<>(
+					new HTTPStatusResponse(HttpStatus.OK.value(), "The Record with Institution id  " + institutionid
+							+ " and year " + year + " and department" + dept + " is Displayed Below", student),
+					HttpStatus.OK);
+		} catch (ServiceException e) {
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),
+					"Cannot find data with institution id " + institutionid + " year " + year + "or department" + dept,
+					null), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/getstud/year/{year}")
 	public ResponseEntity<HTTPStatusResponse> getstudbyYear(@PathVariable int year) {
 		try {
 			List<student> student = studservice.getstudbyYear(year);

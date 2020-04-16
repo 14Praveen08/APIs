@@ -16,8 +16,11 @@ public interface studentdao {
 
 	public List<student> getstudbyInstYear(int institutionid, int year) throws DBException;
 
+	public List<student> getstudbyInstYearDept(int institutionid, int year, Long dept) throws DBException;
+
 	public student get(int id) throws DBException;
 
 	public List<student> getstudbyYear(int year) throws DBException;
 
+	public List<student> getstudbyDepartment(Long deptid) throws DBException;
 }

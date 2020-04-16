@@ -78,7 +78,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			String name = org.getName();
 			String Aname = org.getAlias();
 			String University = org.getUniversity();
-			if (name == null || Aname == null || University == null) {
+			if (org.getName() == null || Aname == null || University == null) {
 				throw new ServiceException(" One or More Fields Missing");
 			}
 			organizationDAO.save(org);
