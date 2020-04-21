@@ -141,6 +141,36 @@ public class studentserviceimpl implements studentservice {
 	}
 
 	@Override
+	public List<student> getstudbyInstDept(int institutionid, Long dept) throws ServiceException {
+		List<student> stud = new ArrayList<student>();
+		try {
+			stud = studdao.getstudbyInstDept(institutionid, dept);
+			if (stud.isEmpty()) {
+				throw new ServiceException("The Record with Institution Id " + institutionid + " and Dept id " + dept
+						+ " is Displayed Below");
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return stud;
+	}
+
+	@Override
+	public List<student> getstudbyDeptYear(Long dept, int year) throws ServiceException {
+		List<student> stud = new ArrayList<student>();
+		try {
+			stud = studdao.getstudbyDeptYear(dept, year);
+			if (stud.isEmpty()) {
+				throw new ServiceException(
+						"The Record with Department Id " + dept + " and year " + year + " is Displayed Below");
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return stud;
+	}
+
+	@Override
 	public List<student> getstudbyInstYearDept(int institutionid, int year, Long dept) throws ServiceException {
 		List<student> stud = new ArrayList<student>();
 		try {

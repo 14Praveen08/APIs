@@ -55,6 +55,35 @@ public class FacultyController {
 
 	}
 
+	@GetMapping("/faculty/role/{role_id}")
+	public ResponseEntity<HTTPStatusResponse> getbyRole(@PathVariable Long role_id) {
+		try {
+			List<Faculty> faculty = facultyService.getByRole(role_id);
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),
+					"The Record with " + role_id + " is Displayed Below", faculty), HttpStatus.OK);
+		} catch (ServiceException e) {
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),
+					"Cannot Find Data with Id " + role_id, role_id), HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@GetMapping("/faculty/instrole/{inst_id}/{role_id}")
+	public ResponseEntity<HTTPStatusResponse> getbyInstRole(@PathVariable Long inst_id, @PathVariable Long role_id) {
+		try {
+			List<Faculty> faculty = facultyService.getByInstRole(inst_id, role_id);
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),
+					"The Record with Institution Id " + inst_id + " and Role Id " + role_id + " is Displayed Below",
+					faculty), HttpStatus.OK);
+		} catch (ServiceException e) {
+			return new ResponseEntity<>(
+					new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),
+							"Cannot Find Data with Institution Id " + inst_id + "and Role Id" + role_id, null),
+					HttpStatus.NOT_FOUND);
+		}
+
+	}
+
 	@GetMapping("/faculty/{id}")
 	public ResponseEntity<HTTPStatusResponse> get(@PathVariable Long id) {
 		try {

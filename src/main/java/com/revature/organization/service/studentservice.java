@@ -25,4 +25,8 @@ public interface studentservice {
 
 	public List<student> getstudbyDepartment(Long deptid) throws ServiceException;
 
+	public List<student> getstudbyDeptYear(Long dept, int year) throws ServiceException;
+
+	public List<student> getstudbyInstDept(int institutionid, Long dept) throws ServiceException;
+
 }

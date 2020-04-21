@@ -35,6 +35,23 @@ public class FacultyDaoImpl implements FacultyDao {
 	}
 
 	@Override
+	public List<Faculty> getByRole(Long role_id) throws DBException {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<Faculty> query = currentSession.createQuery("from Faculty Where role_id=" + role_id, Faculty.class);
+		List<Faculty> list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	public List<Faculty> getByInstRole(Long inst_id, Long role_id) throws DBException {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<Faculty> query = currentSession
+				.createQuery("from Faculty Where institution_id=" + inst_id + "AND role_id=" + role_id, Faculty.class);
+		List<Faculty> list = query.getResultList();
+		return list;
+	}
+
+	@Override
 	public Faculty get(Long id) throws DBException {
 		Session currentSession = entityManager.unwrap(Session.class);
 		Faculty facultyobj = currentSession.get(Faculty.class, id);

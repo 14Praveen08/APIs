@@ -53,6 +53,10 @@ class FacultyControllerTest {
 
 	private long id;
 
+	private Long role_id;
+
+	private Long inst_id;
+
 	@BeforeEach
 	void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -126,6 +130,33 @@ class FacultyControllerTest {
 		id = (long) 1;
 		doThrow(ServiceException.class).when(facultyService).get(id);
 		this.mockmvc.perform(get("/core/faculty/{id}", 1)).andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testGetByRole() throws Exception {
+		when(facultyService.getByRole(role_id)).thenReturn(facList);
+		this.mockmvc.perform(get("/core/faculty/role/{role_id}", 1)).andExpect(status().isOk());
+	}
+
+	@Test
+	void testGetByRoleExpectFailure() throws Exception {
+		role_id = (long) 1;
+		doThrow(ServiceException.class).when(facultyService).getByRole(role_id);
+		this.mockmvc.perform(get("/core/faculty/role/{role_id}", 1)).andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testGetByInstRole() throws Exception {
+		when(facultyService.getByInstRole(inst_id, role_id)).thenReturn(facList);
+		this.mockmvc.perform(get("/core/faculty/instrole/{inst_id}/{role_id}", 1, 1)).andExpect(status().isOk());
+	}
+
+	@Test
+	void testGetByInstRoleExpectFailure() throws Exception {
+		role_id = (long) 1;
+		inst_id = (long) 1;
+		doThrow(ServiceException.class).when(facultyService).getByInstRole(inst_id, role_id);
+		this.mockmvc.perform(get("/core/faculty/instrole/{inst_id}/{role_id}", 1, 1)).andExpect(status().isNotFound());
 	}
 
 	@Test

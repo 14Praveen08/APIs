@@ -56,6 +56,8 @@ class studentcontrollerTest {
 
 	private int year;
 
+	private Long deptid;
+
 	@BeforeEach
 	void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -108,6 +110,19 @@ class studentcontrollerTest {
 	}
 
 	@Test
+	void testGetstudbyDepartment() throws Exception {
+		when(studentService.getstudbyDepartment(deptid)).thenReturn(studList);
+		this.mockmvc.perform(get("/core/getstud/department/{deptid}", 1)).andExpect(status().isOk());
+	}
+
+	@Test
+	void testGetstudbyDepartmentExpectFailure() throws Exception {
+		deptid = (long) 1;
+		doThrow(ServiceException.class).when(studentService).getstudbyDepartment(deptid);
+		this.mockmvc.perform(get("/core/getstud/department/{deptid}", 1)).andExpect(status().isNotFound());
+	}
+
+	@Test
 	void testGetInt() throws Exception {
 		student stud = new student();
 		stud.setId(1);
@@ -130,6 +145,52 @@ class studentcontrollerTest {
 		id = 1;
 		doThrow(ServiceException.class).when(studentService).get(id);
 		this.mockmvc.perform(get("/core/getstud/{id}", 1)).andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testGetstudbyInstDept() throws Exception {
+		when(studentService.getstudbyInstDept(instid, deptid)).thenReturn(studList);
+		this.mockmvc.perform(get("/core/getstud/instdeptwise/{instid}/{deptid}", 1, 1)).andExpect(status().isOk());
+	}
+
+	@Test
+	void testGetstudbyInstDeptExpectFailure() throws Exception {
+		instid = 1;
+		deptid = (long) 1;
+		doThrow(ServiceException.class).when(studentService).getstudbyInstDept(instid, deptid);
+		this.mockmvc.perform(get("/core/getstud/instdeptwise/{instid}/{deptid}", 1, 1))
+				.andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testGetstudbyDeptYear() throws Exception {
+		when(studentService.getstudbyDeptYear(deptid, year)).thenReturn(studList);
+		this.mockmvc.perform(get("/core/getstud/deptyearwise/{deptid}/{year}", 1, 1)).andExpect(status().isOk());
+	}
+
+	@Test
+	void testGetstudbyDeptYearExpectFailure() throws Exception {
+		deptid = (long) 1;
+		year = 1;
+		doThrow(ServiceException.class).when(studentService).getstudbyDeptYear(deptid, year);
+		this.mockmvc.perform(get("/core/getstud/deptyearwise/{deptid}/{year}", 1, 1)).andExpect(status().isNotFound());
+	}
+
+	@Test
+	void testGetstudbyInstDeptYear() throws Exception {
+		when(studentService.getstudbyInstYearDept(instid, year, deptid)).thenReturn(studList);
+		this.mockmvc.perform(get("/core/getstud/instyeardeptwise/{instid}/{year}/{deptid}", 1, 1, 1))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	void testGetstudbyInstDeptYearExpectFailure() throws Exception {
+		instid = 1;
+		deptid = (long) 1;
+		year = 1;
+		doThrow(ServiceException.class).when(studentService).getstudbyInstYearDept(instid, year, deptid);
+		this.mockmvc.perform(get("/core/getstud/instyeardeptwise/{instid}/{year}/{deptid}", 1, 1, 1))
+				.andExpect(status().isNotFound());
 	}
 
 	@Test

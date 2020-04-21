@@ -97,9 +97,41 @@ public class studentcontroller {
 		}
 	}
 
-	@GetMapping("/getstud/instyeardeptwise/{institutionid}/{year}/{dept}")
-	public ResponseEntity<HTTPStatusResponse> getstudbyInstYear(@PathVariable int institutionid, @PathVariable int year,
+	@GetMapping("/getstud/instdeptwise/{institutionid}/{dept}")
+	public ResponseEntity<HTTPStatusResponse> getstudbyInstDept(@PathVariable int institutionid,
 			@PathVariable Long dept) throws ServiceException {
+		try {
+			List<student> student = studservice.getstudbyInstDept(institutionid, dept);
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),
+					"The Record with Institution id  " + institutionid + " and Dept id " + dept + " is Displayed Below",
+					student), HttpStatus.OK);
+		} catch (ServiceException e) {
+			return new ResponseEntity<>(
+					new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),
+							"Cannot find data with institution id " + institutionid + " and Dept id " + dept, null),
+					HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/getstud/deptyearwise/{dept}/{year}")
+	public ResponseEntity<HTTPStatusResponse> getstudbyDeptYear(@PathVariable Long dept, @PathVariable int year)
+			throws ServiceException {
+		try {
+			List<student> student = studservice.getstudbyDeptYear(dept, year);
+			return new ResponseEntity<>(new HTTPStatusResponse(HttpStatus.OK.value(),
+					"The Record with Department id  " + dept + " and year " + year + " is Displayed Below", student),
+					HttpStatus.OK);
+		} catch (ServiceException e) {
+			return new ResponseEntity<>(
+					new HTTPStatusResponse(HttpStatus.NOT_FOUND.value(),
+							"Cannot find data with Department id " + dept + " and year " + year, null),
+					HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/getstud/instyeardeptwise/{institutionid}/{year}/{dept}")
+	public ResponseEntity<HTTPStatusResponse> getstudbyInstYearDept(@PathVariable int institutionid,
+			@PathVariable int year, @PathVariable Long dept) throws ServiceException {
 		try {
 			List<student> student = studservice.getstudbyInstYearDept(institutionid, year, dept);
 			return new ResponseEntity<>(

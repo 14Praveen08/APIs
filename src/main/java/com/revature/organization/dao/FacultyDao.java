@@ -16,4 +16,8 @@ public interface FacultyDao {
 
 	List<Faculty> getByInstitution(Long id) throws DBException;
 
+	List<Faculty> getByRole(Long role_id) throws DBException;
+
+	List<Faculty> getByInstRole(Long inst_id, Long role_id) throws DBException;
+
 }

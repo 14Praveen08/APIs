@@ -65,6 +65,24 @@ public class studentdaoimpl implements studentdao {
 	}
 
 	@Override
+	public List<student> getstudbyInstDept(int institutionid, Long dept) throws DBException {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<student> query = currentSession.createQuery(
+				"from student Where institution_id=" + institutionid + "AND department_id=" + dept, student.class);
+		List<student> list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	public List<student> getstudbyDeptYear(Long dept, int year) throws DBException {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<student> query = currentSession
+				.createQuery("from student Where department_id=" + dept + "AND year=" + year, student.class);
+		List<student> list = query.getResultList();
+		return list;
+	}
+
+	@Override
 	public List<student> getstudbyInstYearDept(int institutionid, int year, Long dept) throws DBException {
 		Session currentSession = entityManager.unwrap(Session.class);
 		Query<student> query = currentSession.createQuery(

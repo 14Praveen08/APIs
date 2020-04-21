@@ -128,4 +128,35 @@ public class FacultyServiceImpl implements FacultyService {
 		return list;
 
 	}
+
+	@Override
+	public List<Faculty> getByRole(Long role_id) throws ServiceException {
+		List<Faculty> list = new ArrayList<Faculty>();
+		try {
+			list = facultyDao.getByRole(role_id);
+			if (list.isEmpty()) {
+				throw new ServiceException("The Record with " + role_id + " is Displayed Below");
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+
+	}
+
+	@Override
+	public List<Faculty> getByInstRole(Long inst_id, Long role_id) throws ServiceException {
+		List<Faculty> list = new ArrayList<Faculty>();
+		try {
+			list = facultyDao.getByInstRole(inst_id, role_id);
+			if (list.isEmpty()) {
+				throw new ServiceException(
+						"The Record with Institution Id " + inst_id + "and Role Id " + role_id + " is Displayed Below");
+			}
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+
+	}
 }

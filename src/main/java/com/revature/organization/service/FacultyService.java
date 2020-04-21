@@ -15,5 +15,9 @@ public interface FacultyService {
 
 	List<Faculty> getByInstitution(Long id) throws ServiceException;
 
+	List<Faculty> getByRole(Long role_id) throws ServiceException;
+
+	List<Faculty> getByInstRole(Long inst_id, Long role_id) throws ServiceException;
+
 	void save(InsertFacultyDto dto) throws ServiceException;
 }
