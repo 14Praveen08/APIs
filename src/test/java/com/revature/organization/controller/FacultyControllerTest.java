@@ -3,10 +3,16 @@ package com.revature.organization.controller;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.Date;
@@ -15,13 +21,18 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +43,9 @@ import com.revature.organization.model.Organization;
 import com.revature.organization.model.Roles;
 import com.revature.organization.service.FacultyService;
 
+@ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
+@WebAppConfiguration
+@AutoConfigureRestDocs
 class FacultyControllerTest {
 
 	private MockMvc mockmvc;
@@ -58,9 +72,10 @@ class FacultyControllerTest {
 	private Long inst_id;
 
 	@BeforeEach
-	void setup() throws Exception {
+	void setup(RestDocumentationContextProvider restDocumentation) throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockmvc = MockMvcBuilders.standaloneSetup(facultycontroller).build();
+		mockmvc = MockMvcBuilders.standaloneSetup(facultycontroller)
+				.apply(documentationConfiguration(restDocumentation)).build();
 		facList = getFacList();
 	}
 
@@ -84,32 +99,34 @@ class FacultyControllerTest {
 	}
 
 	@Test
-	void testGet() throws Exception {
+	void testGetFaculty() throws Exception {
 		when(facultyService.get()).thenReturn(facList);
-		this.mockmvc.perform(get("/core/faculty")).andExpect(status().isOk());
+		this.mockmvc.perform(get("/core/faculty")).andDo(print()).andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	void testGetExpectFailure() throws Exception {
+	void testGetFacultyExpectFailure() throws Exception {
 		doThrow(ServiceException.class).when(facultyService).get();
 		this.mockmvc.perform(get("/core/faculty")).andExpect(status().isNotFound());
 	}
 
 	@Test
-	void testGetbyInst() throws Exception {
+	void testGetFacultybyInst() throws Exception {
 		when(facultyService.getByInstitution(id)).thenReturn(facList);
-		this.mockmvc.perform(get("/core/faculty/institution/{id}", 1)).andExpect(status().isOk());
+		this.mockmvc.perform(get("/core/faculty/institution/{id}", 1)).andDo(print()).andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	void testGetbyInstExpectFailure() throws Exception {
+	void testGetFacultybyInstExpectFailure() throws Exception {
 		id = (long) 1;
 		doThrow(ServiceException.class).when(facultyService).getByInstitution(id);
 		this.mockmvc.perform(get("/core/faculty/institution/{id}", 1)).andExpect(status().isNotFound());
 	}
 
 	@Test
-	void testGetLong() throws Exception {
+	void testGetFacultyById() throws Exception {
 		Faculty faculty = new Faculty();
 		faculty.setEmployee_id(1);
 		faculty.setFirst_name("abc");
@@ -122,37 +139,41 @@ class FacultyControllerTest {
 		faculty.setEmail("abc@gmail.com");
 		faculty.setMobile_no((long) 998451233);
 		when(facultyService.get(id)).thenReturn(faculty);
-		this.mockmvc.perform(get("/core/faculty/{id}", 1)).andExpect(status().isOk());
+		this.mockmvc.perform(get("/core/faculty/{id}", 1)).andDo(print()).andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	void testGetLongExpectFailure() throws Exception {
+	void testGetFacultyByIdExpectFailure() throws Exception {
 		id = (long) 1;
 		doThrow(ServiceException.class).when(facultyService).get(id);
 		this.mockmvc.perform(get("/core/faculty/{id}", 1)).andExpect(status().isNotFound());
 	}
 
 	@Test
-	void testGetByRole() throws Exception {
+	void testGetFacultyByRole() throws Exception {
 		when(facultyService.getByRole(role_id)).thenReturn(facList);
-		this.mockmvc.perform(get("/core/faculty/role/{role_id}", 1)).andExpect(status().isOk());
+		this.mockmvc.perform(get("/core/faculty/role/{role_id}", 1)).andDo(print()).andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	void testGetByRoleExpectFailure() throws Exception {
+	void testGetFacultyByRoleExpectFailure() throws Exception {
 		role_id = (long) 1;
 		doThrow(ServiceException.class).when(facultyService).getByRole(role_id);
 		this.mockmvc.perform(get("/core/faculty/role/{role_id}", 1)).andExpect(status().isNotFound());
 	}
 
 	@Test
-	void testGetByInstRole() throws Exception {
+	void testGetFacultyByInstRole() throws Exception {
 		when(facultyService.getByInstRole(inst_id, role_id)).thenReturn(facList);
-		this.mockmvc.perform(get("/core/faculty/instrole/{inst_id}/{role_id}", 1, 1)).andExpect(status().isOk());
+		this.mockmvc.perform(get("/core/faculty/instrole/{inst_id}/{role_id}", 1, 1)).andDo(print())
+				.andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	void testGetByInstRoleExpectFailure() throws Exception {
+	void testGetFacultyByInstRoleExpectFailure() throws Exception {
 		role_id = (long) 1;
 		inst_id = (long) 1;
 		doThrow(ServiceException.class).when(facultyService).getByInstRole(inst_id, role_id);
@@ -160,7 +181,7 @@ class FacultyControllerTest {
 	}
 
 	@Test
-	void testSave() throws Exception {
+	void testFacultySave() throws Exception {
 		InsertFacultyDto faculty = new InsertFacultyDto();
 		faculty.setId((long) 1);
 		faculty.setEmployee_id(1);
@@ -175,21 +196,21 @@ class FacultyControllerTest {
 		faculty.setMobile_no((long) 998451233);
 		doNothing().when(facultyService).save(faculty);
 		String orgJson = om.writeValueAsString(faculty);
-		MvcResult result = this.mockmvc
-				.perform(post("/core/faculty").contentType(MediaType.APPLICATION_JSON_VALUE).content(orgJson))
-				.andExpect(status().isCreated()).andReturn();
+		this.mockmvc.perform(post("/core/faculty").contentType(MediaType.APPLICATION_JSON_VALUE).content(orgJson))
+				.andDo(print()).andExpect(status().isCreated())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 
 	}
 
 	@Test
-	void testSaveExpectFailure() throws Exception {
+	void testFacultySaveExpectFailure() throws Exception {
 		InsertFacultyDto faculty = new InsertFacultyDto();
 		doThrow(ServiceException.class).when(facultyService).save(faculty);
 		this.mockmvc.perform(post("/core/faculty")).andExpect(status().isBadRequest());
 	}
 
 	@Test
-	void testUpdate() throws Exception {
+	void testFacultyUpdate() throws Exception {
 		InsertFacultyDto faculty = new InsertFacultyDto();
 		faculty.setId((long) 1);
 		faculty.setEmployee_id(1);
@@ -204,29 +225,30 @@ class FacultyControllerTest {
 		faculty.setMobile_no((long) 998451233);
 		doNothing().when(facultyService).save(faculty);
 		String orgJson = om.writeValueAsString(faculty);
-		MvcResult result = this.mockmvc
-				.perform(put("/core/faculty").contentType(MediaType.APPLICATION_JSON_VALUE).content(orgJson))
-				.andExpect(status().isOk()).andReturn();
+		this.mockmvc.perform(put("/core/faculty").contentType(MediaType.APPLICATION_JSON_VALUE).content(orgJson))
+				.andDo(print()).andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 
 	}
 
 	@Test
-	void testUpdateExpectFailure() throws Exception {
+	void testFacultyUpdateExpectFailure() throws Exception {
 		InsertFacultyDto faculty = new InsertFacultyDto();
 		doThrow(ServiceException.class).when(facultyService).save(faculty);
 		this.mockmvc.perform(post("/core/faculty")).andExpect(status().isBadRequest());
 	}
 
 	@Test
-	void testDelete() throws Exception {
+	void testFacultyDelete() throws Exception {
 		Faculty faculty = new Faculty();
 		id = (long) 1;
 		when(facultyService.get(id)).thenReturn(faculty);
-		this.mockmvc.perform(delete("/core/faculty/{id}", 1)).andExpect(status().isOk());
+		this.mockmvc.perform(delete("/core/faculty/{id}", 1)).andDo(print()).andExpect(status().isOk())
+				.andDo(document("{methodName}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	void testDeleteExpectFailure() throws Exception {
+	void testFacultyDeleteExpectFailure() throws Exception {
 		id = (long) 1;
 		doThrow(ServiceException.class).when(facultyService).delete(id);
 		this.mockmvc.perform(delete("/core/faculty/{id}", 1)).andExpect(status().isNotFound());

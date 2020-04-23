@@ -1,0 +1,246 @@
+= REST Documentation for Organization
+:author: Praveen Kumaar
+
+_This is an example output for a service running at http://localhost:8080:_
+
+*Organization API*
+
+_Get All Organizations_
+
+.request
+include::{snippets}/testOrganizationGet/http-request.adoc[]
+
+.response
+include::{snippets}/testOrganizationGet/http-response.adoc[]
+
+_Get Active Organizations_
+
+.request
+include::{snippets}/testOrganizationGetActive/http-request.adoc[]
+
+.response
+include::{snippets}/testOrganizationGetActive/http-response.adoc[]
+
+_Get Organization By Id_
+
+.request
+include::{snippets}/testOrganizationGetById/http-request.adoc[]
+
+.response
+include::{snippets}/testOrganizationGetById/http-response.adoc[]
+
+_Save Organizations_
+
+.request
+include::{snippets}/testOrganizationSave/http-request.adoc[]
+
+.response
+include::{snippets}/testOrganizationSave/http-response.adoc[]
+
+_Update Organizations_
+
+.request
+include::{snippets}/testOrganizationUpdate/http-request.adoc[]
+
+.response
+include::{snippets}/testOrganizationUpdate/http-response.adoc[]
+
+_Delete Organizations_
+
+.request
+include::{snippets}/testOrganizationDelete/http-request.adoc[]
+
+.response
+include::{snippets}/testOrganizationDelete/http-response.adoc[]
+
+*Faculty API*
+
+_Get All Faculties_
+
+.request
+include::{snippets}/testGetFaculty/http-request.adoc[]
+
+.response
+include::{snippets}/testGetFaculty/http-response.adoc[]
+
+_Get Faculty By Id_
+
+.request
+include::{snippets}/testGetFacultyById/http-request.adoc[]
+
+.response
+include::{snippets}/testGetFacultyById/http-response.adoc[]
+
+_Get Faculties By Institution_
+
+.request
+include::{snippets}/testGetFacultyByInst/http-request.adoc[]
+
+.response
+include::{snippets}/testGetFacultyByInst/http-response.adoc[]
+
+_Get Faculties By Institution Role Wise_
+
+.request
+include::{snippets}/testGetFacultyByInstRole/http-request.adoc[]
+
+.response
+include::{snippets}/testGetFacultyByInstRole/http-response.adoc[]
+
+_Get Faculties By Role_
+
+.request
+include::{snippets}/testGetFacultyByRole/http-request.adoc[]
+
+.response
+include::{snippets}/testGetFacultyByRole/http-response.adoc[]
+
+_Save Faculties_
+
+.request
+include::{snippets}/testFacultySave/http-request.adoc[]
+
+.response
+include::{snippets}/testFacultySave/http-response.adoc[]
+
+_Update Faculties_
+
+.request
+include::{snippets}/testFacultyUpdate/http-request.adoc[]
+
+.response
+include::{snippets}/testFacultyUpdate/http-response.adoc[]
+
+_Delete Faculties_
+
+.request
+include::{snippets}/testFacultyDelete/http-request.adoc[]
+
+.response
+include::{snippets}/testFacultyDelete/http-response.adoc[]
+
+*Roles API*
+
+_Get Available Roles_
+
+.request
+include::{snippets}/testGetRoles/http-request.adoc[]
+
+.response
+include::{snippets}/testGetRoles/http-response.adoc[]
+
+_Get Roles By Id_
+
+.request
+include::{snippets}/testGetRolesById/http-request.adoc[]
+
+.response
+include::{snippets}/testGetRolesById/http-response.adoc[]
+
+_Save New Role_
+
+.request
+include::{snippets}/testRoleSave/http-request.adoc[]
+
+.response
+include::{snippets}/testRoleSave/http-response.adoc[]
+
+*Student API*
+
+_Get All Students_
+
+.request
+include::{snippets}/testGetStudent/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudent/http-response.adoc[]
+
+_Get Student By Id_
+
+.request
+include::{snippets}/testGetStudentInt/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentInt/http-response.adoc[]
+
+_Get Student By Institution_
+
+.request
+include::{snippets}/testGetStudentByInst/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByInst/http-response.adoc[]
+
+_Get Student By Year_
+
+.request
+include::{snippets}/testGetStudentByYear/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByYear/http-response.adoc[]
+
+_Get Student By Department_
+
+.request
+include::{snippets}/testGetStudentByDepartment/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByDepartment/http-response.adoc[]
+
+_Get Faculties By Institution Department Wise_
+
+.request
+include::{snippets}/testGetStudentByInstDept/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByInstDept/http-response.adoc[]
+
+_Get Faculties By Institution Year Wise_
+
+.request
+include::{snippets}/testGetStudentByInstYear/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByInstDept/http-response.adoc[]
+
+_Get Faculties By Department Year Wise_
+
+.request
+include::{snippets}/testGetStudentByDeptYear/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByDeptYear/http-response.adoc[]
+
+_Get Faculties By Institution Department Year Wise_
+
+.request
+include::{snippets}/testGetStudentByInstDeptYear/http-request.adoc[]
+
+.response
+include::{snippets}/testGetStudentByInstDeptYear/http-response.adoc[]
+
+_Save Students_
+
+.request
+include::{snippets}/testStudentSave/http-request.adoc[]
+
+.response
+include::{snippets}/testStudentSave/http-response.adoc[]
+
+_Update Students_
+
+.request
+include::{snippets}/testStudentUpdate/http-request.adoc[]
+
+.response
+include::{snippets}/testStudentUpdate/http-response.adoc[]
+
+_Delete Students_
+
+.request
+include::{snippets}/testStudentDelete/http-request.adoc[]
+
+.response
+include::{snippets}/testStudentDelete/http-response.adoc[]
+
+
